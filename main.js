@@ -15,19 +15,9 @@ let myBtn5 = document.getElementById("btn5");
 let myRemovBtns = document.getElementsByClassName("delete");
 
 
-// get delete button
-for (let i = 0; i < myRemovBtns.length; i++) {
-    myRemovBtns.item(i).addEventListener("click", function() {
-        document.querySelector(`#item${i + 1}`).remove()
-    })
-}
+
 
 // get totalPrice
-
-function TotalPrice(item1, item2, item3){
-    return item1 + item2 + item3;
-    
-}
 const prices= {
     item1: 35,
     item2: 34,
@@ -35,59 +25,68 @@ const prices= {
 }
 const state ={
     quantities:{
-        item1: 1,
-        item2: 1,
-        item3: 1,
+        item1: 0,
+        item2: 0,
+        item3: 0,
     },
     totalPrice: 90 ,
 };
 
-// DRY - DONT REPEAT YOURSELF
 
-var result = TotalPrice(35, 34, 21);
-totalPrice.innerHTML = result;
 
-// function increseQuantityItem(){
-//     state.quantities.item1++;
-// }
-// Count1.addEventListener("click", function (e){
-//     1 + increseQuantityItem();
-//     Count1.innerHTML =  state.quantities.item1;
-// })
+function TotalPrice(){
+    totalPrice.innerHTML = prices.item1 * state.quantities.item1 + prices.item2 * state.quantities.item2 + prices.item3 * state.quantities.item3;
+    
+}
+TotalPrice();
+
+
 
 // get increment / decrement button
-var a = 0;
 
 myBtn.addEventListener("click", function increment(e){
-    a++;
-    Count1.innerText = a;
+    state.quantities.item1++;
+    TotalPrice();
+    Count1.innerText = state.quantities.item1;
 });
 myBtn1.addEventListener("click", function decrement(e){
-    if (a > 0){
-        a--;
-        Count1.innerText = a; 
+    if (state.quantities.item1> 0){
+        state.quantities.item1--;
+        Count1.innerText = state.quantities.item1; 
+        TotalPrice();
     }
 });
 myBtn2.addEventListener("click", function increment(e){
-    a++;
-    Count2.innerText = a;
+    state.quantities.item2++;
+    Count2.innerText = state.quantities.item2;
+    TotalPrice();
 });
 myBtn3.addEventListener("click", function decrement(e){
-    if (a > 0){
-        a--;
-        Count2.innerText = a; 
+    if (state.quantities.item2 > 0){
+        state.quantities.item2--;
+        Count2.innerText = state.quantities.item2; 
+        TotalPrice();
     }
 });
 myBtn4.addEventListener("click", function increment(e){
-    a++;
-    Count3.innerText = a;
+    state.quantities.item3++;
+    Count3.innerText = state.quantities.item3;
+    TotalPrice();
 });
 myBtn5.addEventListener("click", function decrement(e){
-    if (a > 0){
-        a--;
-        Count3.innerText = a; 
+    if (state.quantities.item3 > 0){
+        state.quantities.item3--;
+        Count3.innerText = state.quantities.item3; 
+        TotalPrice();
     }
 });
 
-
+// get delete button
+for (let i = 0; i < myRemovBtns.length; i++) {
+    myRemovBtns.item(i).addEventListener("click", function() {
+        document.querySelector(`#item${i + 1}`).remove()
+        state.quantities[`item${i + 1}`] = 0
+        TotalPrice()
+    })
+}
 
